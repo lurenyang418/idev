@@ -91,7 +91,6 @@ class _FormatterPageState extends State<FormatterPage> {
                         jsonFormatWithIndent(_codeTextCtl.fullText, indent);
                   },
                   label: const Text("2space"),
-                  // icon: const Icon(Icons.for),
                 ),
                 TextButton.icon(
                   onPressed: () {
