@@ -73,6 +73,8 @@ dependencies:
 
   dart_jsonwebtoken: ^2.14.0
 
+  network_info_plus: ^6.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

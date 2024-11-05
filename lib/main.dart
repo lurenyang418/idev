@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 // import 'package:idev/router.dart';
 import 'package:idev/ui/drop_file.dart';
 import 'package:idev/ui/hash.dart';
+import 'package:idev/ui/index.dart';
 import 'package:idev/ui/json_formatter.dart';
 import 'package:idev/ui/qr.dart';
+import 'package:idev/ui/sqlite.dart';
 import 'package:window_manager/window_manager.dart';
 
 /// Flutter code sample for [NavigationRail].
@@ -103,10 +105,12 @@ class _NavRailExampleState extends State<NavRailExample> {
                 // 禁止滚动
                 physics: const NeverScrollableScrollPhysics(),
                 children: const [
+                  IndexPage(),
                   FormatterPage(),
                   DropFilePage(),
                   QrPage(),
                   HashPage(),
+                  SqlitePage(),
                 ],
               ),
             ),
@@ -153,43 +157,35 @@ class _NavRailExampleState extends State<NavRailExample> {
         ),
       ),
       destinations: const <NavigationRailDestination>[
+         NavigationRailDestination(
+          icon: Icon(Icons.home),
+          selectedIcon: Icon(Icons.home_outlined),
+          label: Text('启动页'),
+        ),
         NavigationRailDestination(
           icon: Icon(Icons.javascript),
-          selectedIcon: Icon(Icons.javascript),
+          selectedIcon: Icon(Icons.javascript_outlined),
           label: Text('JSON格式化'),
         ),
         NavigationRailDestination(
-          icon: Badge(
-            // label: Text('4'),
-            child: Icon(Icons.today_outlined),
-          ),
-          selectedIcon: Badge(
-            // label: Text('5'),
-            child: Icon(Icons.today_outlined),
-          ),
+          icon: Icon(Icons.today),
+          selectedIcon: Icon(Icons.today_outlined),
           label: Text('图片'),
         ),
         NavigationRailDestination(
-          icon: Badge(
-            // label: Text('4'),
-            child: Icon(Icons.qr_code),
-          ),
-          selectedIcon: Badge(
-            // label: Text('5'),
-            child: Icon(Icons.qr_code),
-          ),
+          icon: Icon(Icons.qr_code),
+          selectedIcon: Icon(Icons.qr_code_outlined),
           label: Text('QRCode'),
         ),
         NavigationRailDestination(
-          icon: Badge(
-            // label: Text('4'),
-            child: Icon(Icons.no_encryption),
-          ),
-          selectedIcon: Badge(
-            // label: Text('5'),
-            child: Icon(Icons.no_encryption),
-          ),
+          icon: Icon(Icons.no_encryption),
+          selectedIcon: Icon(Icons.no_encryption_outlined),
           label: Text('Hash'),
+        ),
+        NavigationRailDestination(
+          icon: Icon(Icons.table_rows),
+          selectedIcon: Icon(Icons.table_rows_outlined),
+          label: Text('SQLite'),
         ),
       ],
     );
