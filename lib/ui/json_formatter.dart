@@ -1,9 +1,9 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_code_editor/flutter_code_editor.dart';
-import 'package:flutter_highlight/themes/tomorrow.dart';
-import 'package:highlight/languages/json.dart';
+import 'package:re_editor/re_editor.dart';
+import 'package:re_highlight/languages/json.dart';
+import 'package:re_highlight/styles/atom-one-light.dart';
 import 'package:idev/utils/utils.dart';
 
 class FormatterPage extends StatefulWidget {
@@ -27,10 +27,11 @@ const demoText = '''{
 }''';
 
 class _FormatterPageState extends State<FormatterPage> {
-  final _codeTextCtl = CodeController(
-    text: demoText,
-    language: json,
-  );
+  // final _codeTextCtl = CodeController(
+  //   text: demoText,
+  //   language: json,
+  // );
+  final CodeLineEditingController _codeTextCtl = CodeLineEditingController();
 
   @override
   void initState() {
@@ -66,7 +67,7 @@ class _FormatterPageState extends State<FormatterPage> {
         children: [
           TextButton.icon(
             onPressed: () {
-              _codeTextCtl.fullText = demoText;
+              _codeTextCtl.text = demoText;
             },
             icon: const Icon(Icons.texture_outlined),
             label: const Text('示例'),
@@ -85,19 +86,19 @@ class _FormatterPageState extends State<FormatterPage> {
                 const Icon(Icons.format_indent_increase),
                 TextButton.icon(
                   onPressed: () {
-                    if (_codeTextCtl.fullText == "") return;
+                    if (_codeTextCtl.text == "") return;
                     var indent = IndentType.getTypeByTitle('2space');
-                    _codeTextCtl.fullText =
-                        jsonFormatWithIndent(_codeTextCtl.fullText, indent);
+                    _codeTextCtl.text =
+                        jsonFormatWithIndent(_codeTextCtl.text, indent);
                   },
                   label: const Text("2space"),
                 ),
                 TextButton.icon(
                   onPressed: () {
-                    if (_codeTextCtl.fullText == "") return;
+                    if (_codeTextCtl.value == "") return;
                     var indent = IndentType.getTypeByTitle('4space');
-                    _codeTextCtl.fullText =
-                        jsonFormatWithIndent(_codeTextCtl.fullText, indent);
+                    _codeTextCtl.text =
+                        jsonFormatWithIndent(_codeTextCtl.text, indent);
                   },
                   label: const Text("4space"),
                 ),
@@ -106,7 +107,7 @@ class _FormatterPageState extends State<FormatterPage> {
           ),
           TextButton.icon(
             onPressed: () {
-              _codeTextCtl.fullText = jsonFlat(_codeTextCtl.fullText);
+              _codeTextCtl.text = jsonFlat(_codeTextCtl.text);
             },
             icon: const Icon(Icons.compress_outlined),
             label: const Text('压缩'),
@@ -130,14 +131,28 @@ class _FormatterPageState extends State<FormatterPage> {
 
   Widget _buildCodeEditor() {
     return Scaffold(
-      body: CodeTheme(
-          data: CodeThemeData(styles: tomorrowTheme),
-          child: SingleChildScrollView(
-              child: CodeField(
-            minLines: 10,
-            maxLines: 50,
-            controller: _codeTextCtl,
-          ))),
-    );
+        body: CodeEditor(
+      style: CodeEditorStyle(
+        codeTheme: CodeHighlightTheme(languages: {
+          'json': CodeHighlightThemeMode(mode: langJson),
+        }, theme: atomOneLightTheme),
+      ),
+      controller: _codeTextCtl,
+      wordWrap: false,
+      indicatorBuilder:
+          (context, editingController, chunkController, notifier) {
+        return Row(
+          children: [
+            DefaultCodeLineNumber(
+              controller: editingController,
+              notifier: notifier,
+            ),
+            DefaultCodeChunkIndicator(
+                width: 30, controller: chunkController, notifier: notifier)
+          ],
+        );
+      },
+      sperator: Container(width: 1, color: Colors.blueGrey),
+    ));
   }
 }
