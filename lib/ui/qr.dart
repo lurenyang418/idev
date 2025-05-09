@@ -52,7 +52,7 @@ class _QrPageState extends State<QrPage> {
                 controller: _qrTextCtl,
                 maxLines: 5,
                 minLines: 1,
-                maxLength: 100,
+                maxLength: 1000,
               ),
             ),
             Padding(
