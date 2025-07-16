@@ -26,6 +26,7 @@ class _HashPageState extends State<HashPage> {
 
   String md5Str = "";
   String bcryptStr = "";
+  String md5AndBcryptStr = "";
 
   final TextEditingController _ctl = TextEditingController();
 
@@ -48,6 +49,7 @@ class _HashPageState extends State<HashPage> {
 
         md5Str = md5.convert(utf8.encode(_ctl.text)).toString();
         bcryptStr = BCrypt.hashpw(_ctl.text, BCrypt.gensalt());
+        md5AndBcryptStr = BCrypt.hashpw(md5Str, BCrypt.gensalt());
       });
     });
     _jwtLeftCtl.addListener(() {
@@ -178,6 +180,27 @@ class _HashPageState extends State<HashPage> {
                 },
                 icon: const Icon(Icons.copy_sharp),
                 label: const Text("bcrypt"),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Text(
+                md5AndBcryptStr,
+                textAlign: TextAlign.left,
+              ),
+              const Spacer(),
+              TextButton.icon(
+                onPressed: () {
+                  if (md5AndBcryptStr == "") {
+                    return;
+                  }
+                  BotToast.showText(
+                      text: "已复制", duration: const Duration(milliseconds: 400));
+                  Clipboard.setData(ClipboardData(text: md5AndBcryptStr));
+                },
+                icon: const Icon(Icons.copy_sharp),
+                label: const Text("md5 & bcrypt"),
               ),
             ],
           ),
