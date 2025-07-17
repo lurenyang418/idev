@@ -44,12 +44,15 @@ class _HashPageState extends State<HashPage> {
         if (_ctl.text.trim() == "") {
           md5Str = "";
           bcryptStr = "";
+          md5AndBcryptStr = "";
           return;
         }
 
         md5Str = md5.convert(utf8.encode(_ctl.text)).toString();
         bcryptStr = BCrypt.hashpw(_ctl.text, BCrypt.gensalt());
-        md5AndBcryptStr = BCrypt.hashpw(md5Str, BCrypt.gensalt());
+        if (_ctl.text.trim() != "") {
+          md5AndBcryptStr = BCrypt.hashpw(md5Str, BCrypt.gensalt());
+        }
       });
     });
     _jwtLeftCtl.addListener(() {
