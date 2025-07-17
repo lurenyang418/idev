@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:idev/ui/b64_image.dart';
 // import 'package:idev/router.dart';
 import 'package:idev/ui/drop_file.dart';
 import 'package:idev/ui/hash.dart';
@@ -111,6 +112,7 @@ class _NavRailExampleState extends State<NavRailExample> {
                   QrPage(),
                   HashPage(),
                   SqlitePage(),
+                  B64Image(),
                 ],
               ),
             ),
@@ -186,6 +188,11 @@ class _NavRailExampleState extends State<NavRailExample> {
           icon: Icon(Icons.table_rows),
           selectedIcon: Icon(Icons.table_rows_outlined),
           label: Text('SQLite'),
+        ),
+         NavigationRailDestination(
+          icon: Icon(Icons.image),
+          selectedIcon: Icon(Icons.image_outlined),
+          label: Text('B64Image'),
         ),
       ],
     );
